@@ -161,13 +161,18 @@ int main(int argc, char **argv)
 		}
 		if(isupper(line[0]))
 		{
-			patch = patch_new();
-			/* for later usage at lines*/
-			strncpy(author, strrstr(line, "  "), 254);
-			/* drop the newline suffix */
-			author[strlen(author)-1]='\0';
-			strcpy(patch->author, author);
-			patches = patch_add(patches, patch);
+			/* if NULL, that must be a line that is longer than
+			 * 256 chars, we can simply ignore it */
+			if (strrstr(line, "  ") != NULL)
+			{
+				patch = patch_new();
+				/* for later usage at lines*/
+				strncpy(author, strrstr(line, "  "), 254);
+				/* drop the newline suffix */
+				author[strlen(author)-1]='\0';
+				strcpy(patch->author, author);
+				patches = patch_add(patches, patch);
+			}
 		}
 		else if(strstr(line, "    hunk ./") == line)
 		{

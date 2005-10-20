@@ -33,8 +33,10 @@ char *strrstr(char *haystack, char *needle)
 	if (p != NULL)
 	{
 		while(strstr(p+1, needle)) p=strstr(p + 1, needle);
+		return p+strlen(needle);
 	}
-	return p+strlen(needle);
+	else
+		return NULL;
 }
 
 char* droplastword(char *str)
