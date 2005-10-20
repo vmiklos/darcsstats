@@ -1,4 +1,5 @@
 #define REPONAME "foobar"
+#define REPOPATH "/var/lib/darcs/repos/foobar"
 #define BACKGROUND "#FFFFFF"
 #define FOREGROUND "#000000"
 #define FONT "Verdana, Helvetica"

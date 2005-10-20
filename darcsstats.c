@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <unistd.h>
 
 #include "darcsstats.h"
 #include "list.h"
@@ -99,7 +100,7 @@ DSList *file_add(DSList *files, file_t *file, file_t *highfile)
 	return(files);
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
 	FILE* fp = NULL;		/* input/output file pointer*/
 	DSList *patches;		/* main patchlist */
@@ -113,6 +114,35 @@ int main(void)
 	file_t *file;
 	char line[512];
 	char author[256];
+
+	/* update the log, too */
+	if(argc > 1 && !strcmp(argv[1], "-u"))
+	{
+		char cwd[PATH_MAX];
+		/* REPOPATH + REPONAME + the darcs command */
+		char cmd[2*PATH_MAX+32];
+
+		/* save the cwd */
+		getcwd(cwd, PATH_MAX);
+		chdir(REPOPATH);
+		if (system("darcs pull -a") != 0)
+		{
+			printf("Can't pull patches!\n");
+			return(1);
+		}
+		snprintf(cmd, 2*PATH_MAX+32, "darcs changes -v > %s/%s", cwd, DARCSLOG);
+		if (system(cmd) != 0)
+		{
+			printf("Can't extract the changelog!\n");
+			return(1);
+		}
+		chdir(cwd);
+	}
+	else if (argc > 1)
+	{
+		printf("usage: %s [-u]\n", argv[0]);
+		return(1);
+	}
 
 	patches = list_new();
 	files = list_new();
