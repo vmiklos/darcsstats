@@ -1,0 +1,8 @@
+#define REPONAME "setup-current"
+#define BACKGROUND "#FFFFFF"
+#define FOREGROUND "#000000"
+#define FONT "Verdana, Helvetica"
+#define BORDER "#000000"
+#define HEADING "#AAAAFF"
+#define DARCSLOG "darcs-log"
+#define OUTPUT "index.html"
