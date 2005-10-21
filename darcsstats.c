@@ -130,7 +130,11 @@ int main(int argc, char **argv)
 
 	/* save the cwd */
 	getcwd(cwd, PATH_MAX);
-	chdir(repopath);
+	if (chdir(repopath) != 0)
+	{
+		printf("can't set directory to %s!\n", repopath);
+		return(1);
+	}
 	snprintf(cmd, PATH_MAX, "darcs changes -v > %s/%s", cwd, DARCSLOG);
 	if (system(cmd) != 0)
 	{
