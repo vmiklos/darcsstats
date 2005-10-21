@@ -50,7 +50,7 @@ void print_footer(FILE* fp, char *reponame)
 		"performed by all developers.  If you want to use them to \n"
 		"motivate yourself, that's fine, but keep in mind that a bit\n"
 		"of useful work is more meaningful than a lot of useless\n"
-		"work.<br>\nCreated by"
+		"work.<br>\nCreated by "
 		"<a href=\"http://frugalware.org/~vmiklos/\">Miklos Vajna</a>\n"
 		"</td></tr></table></font>");
 	fprintf(fp, "</body></html>");
