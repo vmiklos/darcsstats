@@ -3,4 +3,3 @@
 #define FONT "Verdana, Helvetica"
 #define BORDER "#000000"
 #define HEADING "#AAAAFF"
-#define DARCSLOG "darcs-log"

@@ -112,6 +112,7 @@ int main(int argc, char **argv)
 	char repopath[PATH_MAX]; /* path to the darcs repo */
 	char output[PATH_MAX]; /* output file */
 	char cmd[PATH_MAX];
+	char *clfile;
 
 	/* temp vars */
 	patch_t *patch;
@@ -135,7 +136,10 @@ int main(int argc, char **argv)
 		printf("can't set directory to %s!\n", repopath);
 		return(1);
 	}
-	snprintf(cmd, PATH_MAX, "darcs changes -v > %s/%s", cwd, DARCSLOG);
+	/* extract the changelog to /tmp */
+	clfile = strdup("/tmp/darcsstats_XXXXXX");
+	mkstemp(clfile);
+	snprintf(cmd, PATH_MAX, "darcs changes -v > %s", clfile);
 	if (system(cmd) != 0)
 	{
 		printf("Can't extract the changelog!\n");
@@ -146,7 +150,7 @@ int main(int argc, char **argv)
 	patches = list_new();
 	files = list_new();
 
-	if ((fp = fopen(DARCSLOG, "r")) == NULL)
+	if ((fp = fopen(clfile, "r")) == NULL)
 	{
 		perror("Could not open input file for reading");
 		return(1);
@@ -190,7 +194,11 @@ int main(int argc, char **argv)
 			alllines++;
 		}
 	}
-
+	/* delete the no more needed changelog */
+	if(unlink(clfile))
+	{
+		printf("warning: could not remove tempfile %s\n", clfile);
+	}
 	if ((fp = fopen(output, "w")) == NULL)
 	{
 		perror("Could not open output file for writing");
