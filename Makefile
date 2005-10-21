@@ -21,12 +21,15 @@ CFLAGS ?= -Wall -g -march=i686 -O2 -pipe
 INSTALL = /usr/bin/install -c
 DESTDIR =
 bindir = /usr/bin
+mandir = /usr/man/man1
 
 darcsstats: list.o darcsstats.o util.o output.o
 
 install: darcsstats
 	$(INSTALL) -d $(DESTDIR)$(bindir)
+	$(INSTALL) -d $(DESTDIR)$(mandir)
 	$(INSTALL) darcsstats $(DESTDIR)$(bindir)/darcsstats
+	$(INSTALL) -m644 darcsstats.1 $(DESTDIR)$(mandir)/darcsstats.1
 
 clean:
 	rm -f darcsstats *.o
