@@ -1,0 +1,31 @@
+.TH "DARCSSTATS" "1" "Oct 2005"
+.SH NAME
+darcsstats \- darcs statistics generator
+.SH SYNOPSIS
+\fBdarcsstats\fR \fIrepopath\fR \fIrepo.html\fR
+.SH DESCRIPTION
+.BR darcsstats
+is a simply statistics generator, it takes a repo path,
+extracts the changelog from it, and then generates a html output to the
+specified file.
+.SH USAGE
+.br
+Here is a simple example:
+.br
+ $ darcs get http://chicken.humankraft.com/chicken
+.br
+ ./darcsstats chicken/ ~/public_html/chicken.html
+.SH WARNING
+.br
+These statistics are provided purely for interested developers, and are not
+intended to reflect quality - or - quality of work done by any given developer
+in darcs, merely to show activity of operations in the darcs repository
+performed by all developers. If you want to use them to motivate yourself,
+that's fine, but keep in mind that a bit of useful work is more meaningful
+than a lot of useless work.
+.SH AUTHORS
+Written by Miklos Vajna.
+.SH "REPORTING BUGS"
+Please report bugs to the <vmiklos@frugalware.org> address.
+.SH "SEE ALSO"
+.BR darcs (1)
