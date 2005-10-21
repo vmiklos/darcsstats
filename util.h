@@ -27,3 +27,4 @@
 
 char *strrstr(char *haystack, char *needle);
 char* droplastword(char *str);
+char *reponame(char *str);

@@ -52,3 +52,12 @@ char* droplastword(char *str)
 	*pch = '\0';
 	return(str);
 }
+
+/* returns the "name" of the repo */
+char *reponame(char *str)
+{
+	/* drop the / suffix */
+	if(str[strlen(str)-1]=='/')
+		str[strlen(str)-1]='\0';
+	return strrstr(str, "/");
+}

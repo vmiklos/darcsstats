@@ -108,6 +108,10 @@ int main(int argc, char **argv)
 	file_t *highfile = file_new();  /* most frequently modified file */
 	/* total number of added lines, required for couting percentage */
 	int alllines=0;
+	char cwd[PATH_MAX];
+	char repopath[PATH_MAX]; /* path to the darcs repo */
+	char output[PATH_MAX]; /* output file */
+	char cmd[PATH_MAX];
 
 	/* temp vars */
 	patch_t *patch;
@@ -115,34 +119,25 @@ int main(int argc, char **argv)
 	char line[512];
 	char author[256];
 
-	/* update the log, too */
-	if(argc > 1 && !strcmp(argv[1], "-u"))
+	/* parameters */
+	if (argc != 3)
 	{
-		char cwd[PATH_MAX];
-		/* REPOPATH + REPONAME + the darcs command */
-		char cmd[2*PATH_MAX+32];
-
-		/* save the cwd */
-		getcwd(cwd, PATH_MAX);
-		chdir(REPOPATH);
-		if (system("darcs pull -a") != 0)
-		{
-			printf("Can't pull patches!\n");
-			return(1);
-		}
-		snprintf(cmd, 2*PATH_MAX+32, "darcs changes -v > %s/%s", cwd, DARCSLOG);
-		if (system(cmd) != 0)
-		{
-			printf("Can't extract the changelog!\n");
-			return(1);
-		}
-		chdir(cwd);
-	}
-	else if (argc > 1)
-	{
-		printf("usage: %s [-u]\n", argv[0]);
+		printf("usage: %s repo_directory output.html\n", argv[0]);
 		return(1);
 	}
+	strncpy(repopath, argv[1], PATH_MAX);
+	strncpy(output, argv[2], PATH_MAX);
+
+	/* save the cwd */
+	getcwd(cwd, PATH_MAX);
+	chdir(repopath);
+	snprintf(cmd, PATH_MAX, "darcs changes -v > %s/%s", cwd, DARCSLOG);
+	if (system(cmd) != 0)
+	{
+		printf("Can't extract the changelog!\n");
+		return(1);
+	}
+	chdir(cwd);
 
 	patches = list_new();
 	files = list_new();
@@ -192,15 +187,15 @@ int main(int argc, char **argv)
 		}
 	}
 
-	if ((fp = fopen(OUTPUT, "w")) == NULL)
+	if ((fp = fopen(output, "w")) == NULL)
 	{
 		perror("Could not open output file for writing");
 		return(1);
 	}
-	print_header(fp);
+	print_header(fp, reponame(repopath));
 	print_table(fp, patches, alllines);
 	print_stats(fp, patches, files, highfile);
-	print_footer(fp);
+	print_footer(fp, reponame(repopath));
 	fclose(fp);
 	FREELIST(patches);
 	FREELIST(files)
