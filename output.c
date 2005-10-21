@@ -23,6 +23,7 @@
 #include "config.h"
 #include "list.h"
 #include "darcsstats.h"
+#include "util.h"
 
 void print_header(FILE* fp, char *reponame)
 {
@@ -71,7 +72,7 @@ void print_table(FILE* fp, DSList *list, int alllines)
 		"</tr>");
 	for(lp = list; lp; lp = lp->next) {
 		fprintf(fp, "<tr bgcolor=\"%s\">\n", BACKGROUND);
-		fprintf(fp, "<td>%s</td>\n", ((patch_t*)lp->data)->author);
+		fprintf(fp, "<td>%s</td>\n", htmlize(((patch_t*)lp->data)->author));
 		fprintf(fp, "<td>%d</td>\n", ((patch_t*)lp->data)->changes);
 		fprintf(fp, "<td>%d</td>\n", ((patch_t*)lp->data)->lines);
 		fprintf(fp, "<td>%d</td>\n", ((patch_t*)lp->data)->lines/

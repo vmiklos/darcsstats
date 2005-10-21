@@ -1,5 +1,4 @@
 - support for ignoring users
 - support for ignoring files
-- s/</&lt;/ and s/>/&gt;/ in the html output
 - a most frequent pusher record to print_stats()
 - move config.h to a configfile

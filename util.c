@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
 
 #include "util.h"
 
@@ -65,4 +66,39 @@ char *reponame(char *str)
 		return(ret);
 	else
 		return(str);
+}
+
+char *htmlize(char *string)
+{
+	static char buf[1024];
+	char *ptr = NULL;
+	char *nextptr = NULL;
+
+	/* fill out buf with zeros */
+	memset(buf, 0, 1024);
+
+	/* handle < */
+	ptr = strchr(string, '<');
+	if (ptr != NULL)
+	{
+		nextptr = ptr + 1;
+		*ptr = 0;
+		strncpy(buf, string, 1023);
+		strncat(buf, "&lt;", 1023 - strlen(buf));
+		string = nextptr;
+	}
+
+	/* handle > */
+	ptr = strchr(string, '>');
+	if (ptr != NULL)
+	{
+		nextptr = ptr + 1;
+		*ptr = 0;
+		strncat(buf, string, 1023 - strlen(buf));
+		strncat(buf, "&gt;", 1023 - strlen(buf));
+		string = nextptr;
+	}
+
+	strncat(buf, string, 1023 - strlen(buf));
+	return buf;
 }
