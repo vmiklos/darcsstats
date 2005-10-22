@@ -23,6 +23,9 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+#if defined(_WIN32) && !defined(__CYGWIN32__) && !defined(__CYGWIN__)
+#include <windows.h>
+#endif
 
 #include "util.h"
 
@@ -102,3 +105,21 @@ char *htmlize(char *string)
 	strncat(buf, string, 1023 - strlen(buf));
 	return buf;
 }
+
+#if defined(_WIN32) && !defined(__CYGWIN32__) && !defined(__CYGWIN__)
+int mkstemp(char* template)
+{
+	char temppath[512];
+	if(GetTempPath(512,temppath)!=0)
+	{
+		if(GetTempFileName(temppath,"fil",0,template)!=0)
+		{
+				FILE *pFile;
+				pFile=fopen(template,"w+");
+				if(pFile!=NULL)
+					return (int)pFile;
+		}
+	}
+	return -1;
+}
+#endif

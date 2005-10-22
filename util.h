@@ -25,6 +25,10 @@
 	exit(1); }} else p = NULL; }
 #define FREE(p) { if (p) { free(p); (p) = NULL; }}
 
+#if defined(_WIN32) && !defined(__CYGWIN32__) && !defined(__CYGWIN__)
+int mkstemp(char* template);
+#endif
+
 char *strrstr(char *haystack, char *needle);
 char* droplastword(char *str);
 char *reponame(char *str);
