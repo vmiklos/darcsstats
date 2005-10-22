@@ -16,14 +16,24 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #
 
-CFLAGS ?= -Wall -g -march=i686 -O2 -pipe
+OS ?= unix
+CFLAGS ?= -Wall -march=i686 -O2 -pipe
+
+ifeq ($(OS),win)
+	CC = i386-mingw32msvc-gcc
+	LDFLAGS=-mwindows
+	EXEEXT=.exe
+endif
 
 INSTALL = /usr/bin/install -c
 DESTDIR =
 bindir = /usr/bin
 mandir = /usr/man/man1
 
-darcsstats: list.o darcsstats.o util.o output.o
+OBJS = list.o darcsstats.o util.o output.o
+
+darcsstats$(EXEEXT): $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJS)
 
 install: darcsstats
 	$(INSTALL) -d $(DESTDIR)$(bindir)
