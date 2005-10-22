@@ -42,4 +42,4 @@ install: darcsstats
 	$(INSTALL) -m644 darcsstats.1 $(DESTDIR)$(mandir)/darcsstats.1
 
 clean:
-	rm -f darcsstats *.o
+	rm -f darcsstats$(EXEEXT) *.o
