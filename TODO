@@ -1,3 +1,4 @@
+- table for the most frequently modified files (not only one line)
 - support for ignoring users
 - support for ignoring files
 - a most frequent pusher record to print_stats()
