@@ -29,7 +29,16 @@
 
 #include "util.h"
 
-/* finds the last occurrence of needle in haystack */
+/** @defgroup util Utilites
+ * @{
+ * @brief String handling functions used by DarcsStats
+ */
+
+/** Finds the last occurrence of needle in haystack.
+ * @param haystack the string to search in
+ * @param neelde the pattern to search
+ * @return pointer to the begining of the substring
+ */
 char *strrstr(char *haystack, char *needle)
 {
 	char *p;
@@ -43,6 +52,10 @@ char *strrstr(char *haystack, char *needle)
 		return NULL;
 }
 
+/** Drops the last word of a string. isspace() is used to determine separators.
+ * @param text which consists of words
+ * @return pointer to modified string
+ */
 char* droplastword(char *str)
 {
 	/* jump to the end of the string */
@@ -57,7 +70,10 @@ char* droplastword(char *str)
 	return(str);
 }
 
-/* returns the "name" of the repo */
+/** Returns the name of a repo, i.e. "/var/lib/darcs/repos/foo/" -> "foo".
+ * @param str path to the repo
+ * @return pointer to the reponame string
+ */
 char *reponame(char *str)
 {
 	char *ret;
@@ -71,6 +87,11 @@ char *reponame(char *str)
 		return(str);
 }
 
+/** Htmlize the first 1024 chars of a string.
+ * Basically does an s|<|&lt;| && s|>|&gt;|.
+ * @param string plain text to htmlize
+ * @return pointer to the htmlized text
+ */
 char *htmlize(char *string)
 {
 	static char buf[1024];
@@ -107,6 +128,11 @@ char *htmlize(char *string)
 }
 
 #if defined(_WIN32) && !defined(__CYGWIN32__) && !defined(__CYGWIN__)
+/** Make temporary filename (unique).
+ * @param template last six characters of this must be XXXXXX and these
+ *        are replaced with a string that makes the filename unique
+ * @return -1 on error, otherwise the new file descriptor
+ */
 int mkstemp(char* template)
 {
 	char temppath[512];
@@ -123,3 +149,4 @@ int mkstemp(char* template)
 	return -1;
 }
 #endif
+/** @} */

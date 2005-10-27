@@ -35,6 +35,9 @@ OBJS = list.o darcsstats.o util.o output.o
 darcsstats$(EXEEXT): $(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJS)
 
+man:
+	doxygen Doxyfile
+
 install: darcsstats
 	$(INSTALL) -d $(DESTDIR)$(bindir)
 	$(INSTALL) -d $(DESTDIR)$(mandir)
