@@ -206,6 +206,8 @@ int main(int argc, char **argv)
 	}
 	print_header(fp, reponame(repopath));
 	print_table(fp, patches, alllines);
+	files = list_sort(files);
+	print_flist(fp, files);
 	print_stats(fp, patches, files, highfile);
 	print_footer(fp, reponame(repopath));
 	fclose(fp);

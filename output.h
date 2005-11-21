@@ -23,3 +23,4 @@ void print_header(FILE* fp, char *reponame);
 void print_footer(FILE* fp, char *reponame);
 void print_table(FILE* fp, DSList *list, int alllines);
 void print_stats(FILE* fp, DSList *patches, DSList *files, file_t *highfile);
+void print_flist(FILE *fp, DSList *files);

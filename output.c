@@ -104,3 +104,24 @@ void print_stats(FILE* fp, DSList *patches, DSList *files, file_t *highfile)
 		"</td></tr>\n", BACKGROUND, highfile->name, highfile->changes);
 	fprintf(fp, "</table>\n");
 }
+
+void print_flist(FILE *fp, DSList *files)
+{
+	DSList *lp;
+	int i;
+
+	fprintf(fp, "<table bgcolor=\"%s\" border=\"0\" cellspacing=\"1\" "
+			"cellpadding=\"2\" width=\"100%%\">\n", BORDER);
+	fprintf(fp, "<tr bgcolor=\"%s\">\n", HEADING);
+	fprintf(fp, "<td>Filename</td>\n"
+		"<td># of hunks</td>"
+		"</tr>");
+	for(lp = files,i=0; lp && i<FILENUM; lp = lp->next,i++)
+	{
+		fprintf(fp, "<tr bgcolor=\"%s\">\n", BACKGROUND);
+		fprintf(fp, "<td>%s</td>\n", ((file_t*)lp->data)->name);
+		fprintf(fp, "<td>%d</td>\n", ((file_t*)lp->data)->changes);
+		fprintf(fp, "<tr>\n");
+	}
+	fprintf(fp, "</table>\n");
+}
