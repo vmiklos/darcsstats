@@ -78,7 +78,7 @@ file_t *file_new(void)
 	return(file);
 }
 
-DSList *file_add(DSList *files, file_t *file, file_t *highfile)
+DSList *file_add(DSList *files, file_t *file)
 {
 	file_t *handle;
 	if((handle=isfile_in(file->name, files))!=NULL)
@@ -92,11 +92,6 @@ DSList *file_add(DSList *files, file_t *file, file_t *highfile)
 		files = list_add(files, file);
 		handle=file;
 	}
-	if(handle->changes > highfile->changes)
-	{
-		strcpy(highfile->name, handle->name);
-		highfile->changes=handle->changes;
-	}
 	return(files);
 }
 
@@ -105,7 +100,6 @@ int main(int argc, char **argv)
 	FILE* fp = NULL;		/* input/output file pointer*/
 	DSList *patches;		/* main patchlist */
 	DSList *files;			/* main filelist */
-	file_t *highfile = file_new();  /* most frequently modified file */
 	/* total number of added lines, required for couting percentage */
 	int alllines=0;
 	char cwd[PATH_MAX];
@@ -182,7 +176,7 @@ int main(int argc, char **argv)
 			file = file_new();
 			strncpy(file->name, droplastword(strrstr(line, " ./")),
 				PATH_MAX);
-			files = file_add(files, file, highfile);
+			files = file_add(files, file);
 		}
 		if(strstr(line, "    +") == line ||
 			strstr(line, "    -") == line)
@@ -208,11 +202,10 @@ int main(int argc, char **argv)
 	print_table(fp, patches, alllines);
 	files = list_sort(files);
 	print_flist(fp, files);
-	print_stats(fp, patches, files, highfile);
+	print_stats(fp, patches, files);
 	print_footer(fp, reponame(repopath));
 	fclose(fp);
 	FREELIST(patches);
 	FREELIST(files)
-	FREE(highfile);
 	return(0);
 }

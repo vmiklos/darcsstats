@@ -84,7 +84,7 @@ void print_table(FILE* fp, DSList *list, int alllines)
 	fprintf(fp, "</table>\n");
 }
 
-void print_stats(FILE* fp, DSList *patches, DSList *files, file_t *highfile)
+void print_stats(FILE* fp, DSList *patches, DSList *files)
 {
 	DSList *lp;
 	int allpatches=0;
@@ -98,10 +98,6 @@ void print_stats(FILE* fp, DSList *patches, DSList *files, file_t *highfile)
 	fprintf(fp, "<tr>\n<td bgcolor=\"%s\">Total patches:</td>\n", HEADING);
 	fprintf(fp, "<td align=\"right\" bgcolor=\"%s\">%d</td></tr>\n",
 		BACKGROUND, allpatches);
-	fprintf(fp, "<tr>\n<td bgcolor=\"%s\">"
-		"Most frequently modified file:</td>\n", HEADING);
-	fprintf(fp, "<td align=\"right\" bgcolor=\"%s\">%s (%d hunks)"
-		"</td></tr>\n", BACKGROUND, highfile->name, highfile->changes);
 	fprintf(fp, "</table>\n");
 }
 
