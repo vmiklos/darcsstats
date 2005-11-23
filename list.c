@@ -25,7 +25,14 @@
 #include "darcsstats.h"
 #include "list.h"
 
-/* create a new list */
+/** @defgroup ds_list Linked list
+ * @{
+ * @brief Doubly linked list functions used by DarcsStats
+ */
+
+/** Creates a new list.
+ * @return the just allocated list
+ */
 DSList* list_new()
 {
 	DSList *list = NULL;
@@ -40,7 +47,10 @@ DSList* list_new()
 	return(list);
 }
 
-/* return the last item of a list if it is not empty */
+/** Return the last item of a list if it's not empty.
+ * @param list whose last item will re returned
+ * @return the last item
+ */
 DSList* list_last(DSList *list)
 {
 	if (list == NULL)
@@ -49,7 +59,11 @@ DSList* list_last(DSList *list)
 		return list->last;
 }
 
-/* add new item to the list */
+/** Adds a new item to the list.
+ * @param list which will be appended
+ * @param data pointer to be added
+ * @return the list pointer
+ */
 DSList* list_add(DSList *list, void *data)
 {
 	DSList *ptr, *lp;
@@ -82,7 +96,10 @@ DSList* list_add(DSList *list, void *data)
 	return(ptr);
 }
 
-/* count the items of a list */
+/** Counts the items of a list.
+ * @param list which will be counted
+ * @return the number of items in the list
+ */
 int list_count(DSList *list)
 {
 	int i;
@@ -92,7 +109,9 @@ int list_count(DSList *list)
 	return(i);
 }
 
-/* free each item of a list */
+/** free() each item of a list.
+ * @param list to free()
+ */
 void list_free(DSList *list)
 {
 	DSList *ptr, *it = list;
@@ -105,7 +124,11 @@ void list_free(DSList *list)
 	}
 }
 
-/* test for existence of a patch in a DSList */
+/** Tests for existence of a patch in a list.
+ * @param needle to search for
+ * @param list to search in
+ * @return pointer to the patch
+ */
 void *ispatch_in(char *needle, DSList *haystack)
 {
 	DSList *lp;
@@ -116,7 +139,11 @@ void *ispatch_in(char *needle, DSList *haystack)
 	return(NULL);
 }
 
-/* test for existence of a file in a DSList */
+/** Tests for existence of a file in a list.
+ * @param needle to search for
+ * @param list to search in
+ * @return pointer to the file
+ */
 void *isfile_in(char *needle, DSList *haystack)
 {
 	DSList *lp;
@@ -127,9 +154,12 @@ void *isfile_in(char *needle, DSList *haystack)
 	return(NULL);
 }
 
-/* sorts a list (the algorithm used is mergesort)
- * the original idea is from
- * http://www.chiark.greenend.org.uk/~sgtatham/algorithms/listsort.html */
+/** Sorts a list.
+ * @param list to sort
+ * @param callback function, called with two arguments that point to
+ * the elements being compared
+ * @return the sorted list
+ */
 DSList *list_sort(DSList *list, int(*cmp)(DSList *, DSList *))
 {
 	DSList *p, *q, *e, *tail;
@@ -219,3 +249,4 @@ DSList *list_sort(DSList *list, int(*cmp)(DSList *, DSList *))
 		insize *= 2;
 	}
 }
+/** @} */
