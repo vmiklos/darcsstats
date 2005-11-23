@@ -36,4 +36,4 @@ int list_count(DSList* list);
 void list_free(DSList* list);
 void *ispatch_in(char *needle, DSList *haystack);
 void *isfile_in(char *needle, DSList *haystack);
-DSList *list_sort(DSList *list);
+DSList *list_sort(DSList *list, int(*cmp)(DSList *, DSList *));

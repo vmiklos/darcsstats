@@ -95,6 +95,13 @@ DSList *file_add(DSList *files, file_t *file)
 	return(files);
 }
 
+/* compares file changes for list_sort() */
+int cmp(DSList *a, DSList *b)
+{
+	return(((file_t*)b->data)->changes - ((file_t*)a->data)->changes);
+}
+
+
 int main(int argc, char **argv)
 {
 	FILE* fp = NULL;		/* input/output file pointer*/
@@ -200,7 +207,7 @@ int main(int argc, char **argv)
 	}
 	print_header(fp, reponame(repopath));
 	print_table(fp, patches, alllines);
-	files = list_sort(files);
+	files = list_sort(files, cmp);
 	print_flist(fp, files);
 	print_stats(fp, patches, files);
 	print_footer(fp, reponame(repopath));

@@ -127,16 +127,10 @@ void *isfile_in(char *needle, DSList *haystack)
 	return(NULL);
 }
 
-/* compares file changes for list_sort() */
-int cmp(DSList *a, DSList *b)
-{
-	return(((file_t*)b->data)->changes - ((file_t*)a->data)->changes);
-}
-
 /* sorts a list (the algorithm used is mergesort)
  * the original idea is from
  * http://www.chiark.greenend.org.uk/~sgtatham/algorithms/listsort.html */
-DSList *list_sort(DSList *list)
+DSList *list_sort(DSList *list, int(*cmp)(DSList *, DSList *))
 {
 	DSList *p, *q, *e, *tail;
 	int insize, nmerges, psize, qsize, i;
@@ -189,7 +183,7 @@ DSList *list_sort(DSList *list)
 					p = p->next;
 					psize--;
 				}
-				else if (cmp(p,q) <= 0)
+				else if ((*cmp)(p,q) <= 0)
 				{
 					/* first element of p is lower (or same)
 					 * e must come from p. */
