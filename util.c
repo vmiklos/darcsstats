@@ -29,7 +29,7 @@
 
 #include "util.h"
 
-/** @defgroup util Utilites
+/** @defgroup ds_util Utilites
  * @{
  * @brief String handling functions used by DarcsStats
  */
