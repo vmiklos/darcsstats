@@ -1,0 +1,21 @@
+Hi,
+
+If you want to try out this stuff, then just type the usual
+
+	make && make install
+
+then
+
+	man darcsstats
+
+to read the documentation.
+
+If you want to read the development docs, then type
+
+	make html
+
+and open the html files from the html/ dir in your favorite web
+browser.
+
+Have fun,
+VMiklos
