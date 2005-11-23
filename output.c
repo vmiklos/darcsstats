@@ -25,6 +25,15 @@
 #include "darcsstats.h"
 #include "util.h"
 
+/** @defgroup ds_output DarcsStats output functions
+ * @{
+ * @brief Functions producing DarcsStats's output
+ */
+
+/** Prints a HTML header.
+ * @param file pointer to pass to fprintf()
+ * @param repo name of the repo
+ */
 void print_header(FILE* fp, char *reponame)
 {
 	fprintf(fp, "<html>\n");
@@ -38,6 +47,10 @@ void print_header(FILE* fp, char *reponame)
 	fprintf(fp, "</td></tr><tr><td>\n");
 }
 
+/** Prints a HTML footer.
+ * @param file pointer to pass to fprintf()
+ * @param repo name of the repo
+ */
 void print_footer(FILE* fp, char *reponame)
 {
 	fprintf(fp, "</td>\n</tr>\n<tr bgcolor=\"%s\">\n<td align=\"center\">",
@@ -57,6 +70,11 @@ void print_footer(FILE* fp, char *reponame)
 	fprintf(fp, "</body></html>");
 }
 
+/** Prints the main stat table.
+ * @param file pointer to pass to fprintf()
+ * @param list of patches
+ * @param number of all lines
+ */
 void print_table(FILE* fp, DSList *list, int alllines)
 {
 	DSList *lp;
@@ -84,6 +102,11 @@ void print_table(FILE* fp, DSList *list, int alllines)
 	fprintf(fp, "</table>\n");
 }
 
+/** Prints some additional stat.
+ * @param file pointer to pass to fprintf()
+ * @param list of patches
+ * @param list of files
+ */
 void print_stats(FILE* fp, DSList *patches, DSList *files)
 {
 	DSList *lp;
@@ -101,6 +124,10 @@ void print_stats(FILE* fp, DSList *patches, DSList *files)
 	fprintf(fp, "</table>\n");
 }
 
+/** Prints the list of most frequenly modified files.
+ * @param file pointer to pass to fprintf()
+ * @param list of files
+ */
 void print_flist(FILE *fp, DSList *files)
 {
 	DSList *lp;
@@ -121,3 +148,4 @@ void print_flist(FILE *fp, DSList *files)
 	}
 	fprintf(fp, "</table>\n");
 }
+/** @} */
