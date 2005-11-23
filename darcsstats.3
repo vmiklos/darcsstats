@@ -1,0 +1,31 @@
+.TH "DARCSSTATS" "3" "Oct 2005"
+.SH NAME
+darcsstats(3) \- developer documentation of DarcsStats
+.SH OVERVIEW
+The darcsstats program is a simple stat generator for darcs(1).
+Basically it consists of utility functions (ds_util(3)), output
+functions (ds_output(3)), doubly linked list handling functions
+(ds_list(3)) and patch/file entry handling functions(ds_patch(3)
+and ds_file(3)).
+.SH OUTPUT FUNCTIONS
+.br
+The colors of the generated HTML output are configured build-time,
+in config.h. See the BACKGROUND, FOREGROUND, FONT, BORDER and
+HEADING constants.
+.SH LIST FUNCTIONS
+The list functions are doubly linked ones. the data variable of the
+list item struct is a void pointer for the user data, so that these
+functions are a generic framework, used to store file and patch
+entries. The list_sort() function uses mergesort, as FIXME.
+.SH FILE/PATCH FUNCTIONS
+There are placed in main.c. The file_add() function does not always
+adds the given file, if it is already registered, then it just
+increments the changes of the file. The situation is the same at
+patch_add(): just increments the number of hunks and registers
+the patch as a new one only if it's necessary.
+.SH "SEE ALSO"
+.BR ds_util (3),
+.BR ds_output (3),
+.BR ds_list (3),
+.BR ds_patch (3),
+.BR ds_file (3)
