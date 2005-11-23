@@ -38,6 +38,14 @@ darcsstats$(EXEEXT): $(OBJS)
 man:
 	doxygen Doxyfile
 
+html: man
+	mkdir -p html
+	man2html darcsstats.1 >html/darcsstats.1.html
+	man2html darcsstats.3 >html/darcsstats.3.html
+	for i in man/man3/*; do \
+		man2html $$i |sed '1 d;2 d' >html/`basename $$i`.html; \
+	done
+
 install: darcsstats
 	$(INSTALL) -d $(DESTDIR)$(bindir)
 	$(INSTALL) -d $(DESTDIR)$(mandir)
@@ -45,4 +53,8 @@ install: darcsstats
 	$(INSTALL) -m644 darcsstats.1 $(DESTDIR)$(mandir)/darcsstats.1
 
 clean:
-	rm -f darcsstats$(EXEEXT) *.o
+	rm -f *.o
+
+distclean:
+	rm -f darcsstats$(EXEEXT)
+	rm -rf html man
