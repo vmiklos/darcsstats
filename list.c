@@ -126,7 +126,7 @@ void list_free(DSList *list)
 
 /** Tests for existence of a patch in a list.
  * @param needle to search for
- * @param list to search in
+ * @param haystack list to search in
  * @return pointer to the patch
  */
 void *ispatch_in(char *needle, DSList *haystack)
@@ -141,7 +141,7 @@ void *ispatch_in(char *needle, DSList *haystack)
 
 /** Tests for existence of a file in a list.
  * @param needle to search for
- * @param list to search in
+ * @param haystack list to search in
  * @return pointer to the file
  */
 void *isfile_in(char *needle, DSList *haystack)
@@ -156,8 +156,8 @@ void *isfile_in(char *needle, DSList *haystack)
 
 /** Sorts a list.
  * @param list to sort
- * @param callback function, called with two arguments that point to
- * the elements being compared
+ * @param cmp callback function, called with two arguments that
+ * point to the elements being compared
  * @return the sorted list
  */
 DSList *list_sort(DSList *list, int(*cmp)(DSList *, DSList *))

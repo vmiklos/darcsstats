@@ -36,7 +36,7 @@
 
 /** Finds the last occurrence of needle in haystack.
  * @param haystack the string to search in
- * @param neelde the pattern to search
+ * @param needle the pattern to search
  * @return pointer to the begining of the substring
  */
 char *strrstr(char *haystack, char *needle)
@@ -53,7 +53,7 @@ char *strrstr(char *haystack, char *needle)
 }
 
 /** Drops the last word of a string. isspace() is used to determine separators.
- * @param text which consists of words
+ * @param str text which consists of words
  * @return pointer to modified string
  */
 char* droplastword(char *str)

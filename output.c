@@ -31,8 +31,8 @@
  */
 
 /** Prints a HTML header.
- * @param file pointer to pass to fprintf()
- * @param repo name of the repo
+ * @param fp file pointer to pass to fprintf()
+ * @param reponame name of the repo
  */
 void print_header(FILE* fp, char *reponame)
 {
@@ -48,8 +48,8 @@ void print_header(FILE* fp, char *reponame)
 }
 
 /** Prints a HTML footer.
- * @param file pointer to pass to fprintf()
- * @param repo name of the repo
+ * @param fp file pointer to pass to fprintf()
+ * @param reponame name of the repo
  */
 void print_footer(FILE* fp, char *reponame)
 {
@@ -71,9 +71,9 @@ void print_footer(FILE* fp, char *reponame)
 }
 
 /** Prints the main stat table.
- * @param file pointer to pass to fprintf()
+ * @param fp file pointer to pass to fprintf()
  * @param list of patches
- * @param number of all lines
+ * @param alllines number of all lines
  */
 void print_table(FILE* fp, DSList *list, int alllines)
 {
@@ -103,9 +103,9 @@ void print_table(FILE* fp, DSList *list, int alllines)
 }
 
 /** Prints some additional stat.
- * @param file pointer to pass to fprintf()
- * @param list of patches
- * @param list of files
+ * @param fp file pointer to pass to fprintf()
+ * @param patches list of patches
+ * @param files list of files
  */
 void print_stats(FILE* fp, DSList *patches, DSList *files)
 {
@@ -125,8 +125,8 @@ void print_stats(FILE* fp, DSList *patches, DSList *files)
 }
 
 /** Prints the list of most frequenly modified files.
- * @param file pointer to pass to fprintf()
- * @param list of files
+ * @param fp file pointer to pass to fprintf()
+ * @param files list of files
  */
 void print_flist(FILE *fp, DSList *files)
 {
