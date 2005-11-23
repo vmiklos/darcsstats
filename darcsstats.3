@@ -16,7 +16,11 @@ HEADING constants.
 The list functions are doubly linked ones. the data variable of the
 list item struct is a void pointer for the user data, so that these
 functions are a generic framework, used to store file and patch
-entries. The list_sort() function uses mergesort, as FIXME.
+entries. The list_sort() function uses Mergesort, as "It turns out
+that it works even better on linked lists than it does on arrays.
+It avoids the need for the auxiliary space, and becomes a simple,
+reliably O(N log N) sorting algorithm. And as an added bonus, it's
+stable too." -- Simon Tatham <anakin@pobox.com>
 .SH FILE/PATCH FUNCTIONS
 There are placed in main.c. The file_add() function does not always
 adds the given file, if it is already registered, then it just
