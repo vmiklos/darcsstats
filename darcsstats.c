@@ -31,6 +31,14 @@
 #include "output.h"
 #include "config.h"
 
+/** @defgroup ds_patch Patch functions
+ * @{
+ * @brief Patch handling functions used by DarcsStats
+ */
+
+/** Allocates an initializes a patch.
+ * @return patch pointer
+ */
 patch_t *patch_new(void)
 {
 	patch_t *patch = NULL;
@@ -43,6 +51,14 @@ patch_t *patch_new(void)
 	return(patch);
 }
 
+/** Registers a new patch in the patch list.
+ * If the patch already registered, just increments the number of
+ * changes of the patch, otherwise adds the new patch item to the list
+ * of patches.
+ * @param patches the list of patches already registered
+ * @param patch to register
+ * @return the given patchlist
+ */
 DSList *patch_add(DSList *patches, patch_t *patch)
 {
 	patch_t *handle;
@@ -65,8 +81,17 @@ DSList *patch_add(DSList *patches, patch_t *patch)
 	}
 	return(patches);
 }
+/** @} */
 
 
+/** @defgroup ds_file File functions
+ * @{
+ * @brief File handling functions used by DarcsStats
+ */
+
+/** Allocates an initializes a file.
+ * @return file pointer
+ */
 file_t *file_new(void)
 {
 	file_t *file = NULL;
@@ -78,6 +103,14 @@ file_t *file_new(void)
 	return(file);
 }
 
+/** Registers a new file in the file list.
+ * If the file already registered, just increments the number of
+ * changes of the file, otherwise adds the new file item to the list
+ * of files.
+ * @param files the list of files already registered
+ * @param file to register
+ * @return the given filelist
+ */
 DSList *file_add(DSList *files, file_t *file)
 {
 	file_t *handle;
@@ -95,12 +128,17 @@ DSList *file_add(DSList *files, file_t *file)
 	return(files);
 }
 
-/* compares file changes for list_sort() */
+/** Compares file changes.
+ * Supposed to be a helper function for list_sort().
+ * @param a list item containing a file entry
+ * @param b list item containing a file entry
+ * @return the arithmetic difference of the changes of the two files
+ */
 int cmp(DSList *a, DSList *b)
 {
 	return(((file_t*)b->data)->changes - ((file_t*)a->data)->changes);
 }
-
+/** @} */
 
 int main(int argc, char **argv)
 {
