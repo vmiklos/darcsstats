@@ -7,11 +7,33 @@ Basically it consists of utility functions (ds_util(3)), output
 functions (ds_output(3)), doubly linked list handling functions
 (ds_list(3)) and patch/file entry handling functions(ds_patch(3)
 and ds_file(3)).
+
+A few words about how the modules are connected to each other.
+First darcsstats calls darcs to extract the changelog from the
+repo. If that is performed successfully, then the program parses
+the changelog: it searches for patches (lines starting with an
+uppercase letter) and hunks (lines starting with the
+"\ \ \ \ hunk\ ./" string). Parsing here means that the linked
+lists named files and patches got filled with content, so the only
+thing it has to do is to fprintf() the stats to the output file
+in HTML format. Ah, and finally the usual freeing of the
+dinamically allocated memory, of course.
+
 .SH OUTPUT FUNCTIONS
 .br
 The colors of the generated HTML output are configured build-time,
 in config.h. See the BACKGROUND, FOREGROUND, FONT, BORDER and
 HEADING constants.
+
+When running darcsstats, first print_header() is called for creating
+the start of the HTML file. Then print_table() which creates a
+summary table for the authors: number of changes, lines changed,
+lines per change and the amount of the changes of the author compared
+to the total number of changes. Then here cames a small table
+containing info about the total number of authors and patches,
+respectively. Finally a list of most frequently modified files are
+printed and the HTML footer.
+
 .SH LIST FUNCTIONS
 The list functions are doubly linked ones. the data variable of the
 list item struct is a void pointer for the user data, so that these
@@ -21,12 +43,35 @@ that it works even better on linked lists than it does on arrays.
 It avoids the need for the auxiliary space, and becomes a simple,
 reliably O(N log N) sorting algorithm. And as an added bonus, it's
 stable too." -- Simon Tatham <anakin@pobox.com>
+
+The list functions are not called directly by the program, just
+patch_add() and file_add() call them, as the program does not know
+that storing patches and files uses the same functions, nor the
+linked lists functions does now know anything about the stored data
+- they are two fully separated layer. Because of this list_sort()
+requires a callback function for comparing two items - the idea is
+from qsort(3). Also this way it's possible to write more than one
+comparison function for the same structure, for example it would be
+possible to sort the list of most frequently modified files by name,
+not by the number of modifications - as currently darcsstats does.
+In addition with these callback functions, you can use list_sort()
+to get the reverse order of a list - cmp() (in darcsstats.c) does.
+
 .SH FILE/PATCH FUNCTIONS
 There are placed in main.c. The file_add() function does not always
 adds the given file, if it is already registered, then it just
 increments the changes of the file. The situation is the same at
 patch_add(): just increments the number of hunks and registers
 the patch as a new one only if it's necessary.
+
+This way the total number of modifications of earch file will be
+counted. Also in each patch entry (which represents an author) the
+total number of changes and changed lines are stored.
+
+.SH FUTURE DIRECTIONS
+If you compile darcs with git support, then you'll be able to
+generate statistics for any git repo, too. However, this is tested
+only on Linux.
 .SH "SEE ALSO"
 .BR ds_util (3),
 .BR ds_output (3),
