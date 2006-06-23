@@ -157,6 +157,7 @@ int main(int argc, char **argv)
 	FILE* fp = NULL;		/* input/output file pointer*/
 	DSList *patches;		/* main patchlist */
 	DSList *files;			/* main filelist */
+	DSList *ignores=NULL;           /* ignore list */
 	/* total number of added lines, required for couting percentage */
 	int alllines=0;
 	char cwd[PATH_MAX];
@@ -164,6 +165,7 @@ int main(int argc, char **argv)
 	char output[PATH_MAX]; /* output file */
 	char cmd[PATH_MAX];
 	char *clfile;
+	int i;
 
 	/* temp vars */
 	patch_t *patch;
@@ -172,13 +174,17 @@ int main(int argc, char **argv)
 	char author[256];
 
 	/* parameters */
-	if (argc != 3)
+	if (argc < 3)
 	{
-		printf("usage: %s repo_directory output.html\n", argv[0]);
+		printf("usage: %s repo_directory output.html [ignore1, ignore2, ...]\n", argv[0]);
 		return(1);
 	}
 	strncpy(repopath, argv[1], PATH_MAX);
 	strncpy(output, argv[2], PATH_MAX);
+
+	/* ignorelist */
+	for(i=3;i<argc;i++)
+		ignores = list_add(ignores, &argv[i]);
 
 	/* save the cwd */
 	getcwd(cwd, PATH_MAX);
@@ -257,13 +263,14 @@ int main(int argc, char **argv)
 	}
 	print_header(fp, reponame(repopath));
 	patches = list_sort(patches, cmp_patch);
-	print_table(fp, patches, alllines);
+	print_table(fp, patches, alllines, ignores);
 	files = list_sort(files, cmp_file);
 	print_flist(fp, files);
 	print_stats(fp, patches, files);
 	print_footer(fp, reponame(repopath));
 	fclose(fp);
 	FREELIST(patches);
-	FREELIST(files)
+	FREELIST(files);
+	FREELISTPTR(ignores);
 	return(0);
 }

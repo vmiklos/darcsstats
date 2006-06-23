@@ -111,14 +111,16 @@ int list_count(DSList *list)
 
 /** free() each item of a list.
  * @param list to free()
+ * @param mode if true, then the data won't be freed
  */
-void list_free(DSList *list)
+void list_free(DSList *list, int mode)
 {
 	DSList *ptr, *it = list;
 
 	while(it) {
 		ptr = it->next;
-		free(it->data);
+		if(!mode)
+			free(it->data);
 		free(it);
 		it = ptr;
 	}
@@ -150,6 +152,21 @@ void *isfile_in(char *needle, DSList *haystack)
 
 	for(lp = haystack; lp; lp = lp->next)
 		if(lp->data && !strcmp(((file_t*)lp->data)->name, needle))
+			return(lp->data);
+	return(NULL);
+}
+
+/** Tests for existence of an ignore in a list.
+ * @param needle to search for
+ * @param haystack list to search in
+ * @return pointer to the ignore
+ */
+void *isignore_in(char *needle, DSList *haystack)
+{
+	DSList *lp;
+
+	for(lp = haystack; lp; lp = lp->next)
+		if(lp->data && !strcmp(*((char**)lp->data), needle))
 			return(lp->data);
 	return(NULL);
 }

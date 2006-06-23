@@ -21,6 +21,6 @@
 
 void print_header(FILE* fp, char *reponame);
 void print_footer(FILE* fp, char *reponame);
-void print_table(FILE* fp, DSList *list, int alllines);
+void print_table(FILE* fp, DSList *list, int alllines, DSList *ignores);
 void print_stats(FILE* fp, DSList *patches, DSList *files);
 void print_flist(FILE *fp, DSList *files);

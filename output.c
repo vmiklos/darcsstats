@@ -74,8 +74,9 @@ void print_footer(FILE* fp, char *reponame)
  * @param fp file pointer to pass to fprintf()
  * @param list of patches
  * @param alllines number of all lines
+ * @param list of ignores
  */
-void print_table(FILE* fp, DSList *list, int alllines)
+void print_table(FILE* fp, DSList *list, int alllines, DSList *ignores)
 {
 	DSList *lp;
 
@@ -88,17 +89,19 @@ void print_table(FILE* fp, DSList *list, int alllines)
 		"<td>Lines per Change</td>"
 		"<td>%% of Changed Lines</td>"
 		"</tr>");
-	for(lp = list; lp; lp = lp->next) {
-		fprintf(fp, "<tr bgcolor=\"%s\">\n", BACKGROUND);
-		fprintf(fp, "<td>%s</td>\n", htmlize(((patch_t*)lp->data)->author));
-		fprintf(fp, "<td>%d</td>\n", ((patch_t*)lp->data)->changes);
-		fprintf(fp, "<td>%d</td>\n", ((patch_t*)lp->data)->lines);
-		fprintf(fp, "<td>%d</td>\n", ((patch_t*)lp->data)->lines/
-			((patch_t*)lp->data)->changes);
-		fprintf(fp, "<td>%d</td>\n", 100*((patch_t*)lp->data)->lines/
-			alllines);
-		fprintf(fp, "<tr>\n");
-	}
+	for(lp = list; lp; lp = lp->next)
+		if(!isignore_in(((patch_t*)lp->data)->author, ignores))
+		{
+			fprintf(fp, "<tr bgcolor=\"%s\">\n", BACKGROUND);
+			fprintf(fp, "<td>%s</td>\n", htmlize(((patch_t*)lp->data)->author));
+			fprintf(fp, "<td>%d</td>\n", ((patch_t*)lp->data)->changes);
+			fprintf(fp, "<td>%d</td>\n", ((patch_t*)lp->data)->lines);
+			fprintf(fp, "<td>%d</td>\n", ((patch_t*)lp->data)->lines/
+				((patch_t*)lp->data)->changes);
+			fprintf(fp, "<td>%d</td>\n", 100*((patch_t*)lp->data)->lines/
+				alllines);
+			fprintf(fp, "<tr>\n");
+		}
 	fprintf(fp, "</table>\n");
 }
 

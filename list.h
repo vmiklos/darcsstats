@@ -27,13 +27,15 @@ typedef struct __dslist_t
 	struct __dslist_t* last;
 } DSList;
 
-#define FREELIST(p) { list_free(p); p = NULL; }
+#define FREELIST(p) { list_free(p, 0); p = NULL; }
+#define FREELISTPTR(p) { list_free(p, 1); p = NULL; }
 
 DSList* list_new();
 DSList* list_last(DSList* list);
 DSList* list_add(DSList* list, void* data);
 int list_count(DSList* list);
-void list_free(DSList* list);
+void list_free(DSList* list, int mode);
 void *ispatch_in(char *needle, DSList *haystack);
 void *isfile_in(char *needle, DSList *haystack);
+void *isignore_in(char *needle, DSList *haystack);
 DSList *list_sort(DSList *list, int(*cmp)(DSList *, DSList *));
