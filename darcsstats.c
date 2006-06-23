@@ -134,9 +134,21 @@ DSList *file_add(DSList *files, file_t *file)
  * @param b list item containing a file entry
  * @return the arithmetic difference of the changes of the two files
  */
-int cmp(DSList *a, DSList *b)
+int cmp_file(DSList *a, DSList *b)
 {
 	return(((file_t*)b->data)->changes - ((file_t*)a->data)->changes);
+}
+/** @} */
+
+/** Compares patch changes.
+ * Supposed to be a helper function for list_sort().
+ * @param a list item containing a patch entry
+ * @param b list item containing a patch entry
+ * @return the arithmetic difference of the changes of the two patches
+ */
+int cmp_patch(DSList *a, DSList *b)
+{
+	return(((patch_t*)b->data)->changes - ((patch_t*)a->data)->changes);
 }
 /** @} */
 
@@ -244,8 +256,9 @@ int main(int argc, char **argv)
 		return(1);
 	}
 	print_header(fp, reponame(repopath));
+	patches = list_sort(patches, cmp_patch);
 	print_table(fp, patches, alllines);
-	files = list_sort(files, cmp);
+	files = list_sort(files, cmp_file);
 	print_flist(fp, files);
 	print_stats(fp, patches, files);
 	print_footer(fp, reponame(repopath));
