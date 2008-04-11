@@ -6,10 +6,9 @@ Miklos Vajna <vmiklos@vmiklos.hu>
 darcsstats is a simple statistics generator for
 link:http://darcs.net/[darcs] repositories.
 
-== Why is it good?
+== Status
 
-It may or may not be good for you. I wrote it as a homework with the
-following conditions:
+I wrote it as a homework with the following conditions:
 
 - should be written in C
 
