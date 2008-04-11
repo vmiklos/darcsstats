@@ -1,7 +1,7 @@
 /*
  *  output.c
  * 
- *  Copyright (c) 2005-2006 by Miklos Vajna <vmiklos@frugalware.org>
+ *  Copyright (c) 2005-2006 by Miklos Vajna <vmiklos@vmiklos.hu>
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ void print_footer(FILE* fp, char *reponame)
 		"motivate yourself, that's fine, but keep in mind that a bit\n"
 		"of useful work is more meaningful than a lot of useless\n"
 		"work.<br>\nCreated by "
-		"<a href=\"http://frugalware.org/~vmiklos/\">Miklos Vajna</a>\n"
+		"<a href=\"http://vmiklos.hu/\">Miklos Vajna</a>\n"
 		"</td></tr></table></font>");
 	fprintf(fp, "</body></html>");
 }
