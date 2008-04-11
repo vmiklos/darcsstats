@@ -35,6 +35,16 @@ OBJS = list.o darcsstats.o util.o output.o
 darcsstats$(EXEEXT): $(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJS)
 
+doc: HEADER.html Changelog
+
+HEADER.html: README
+	ln -s README HEADER.txt
+	asciidoc -a toc -a numbered -a sectids HEADER.txt
+	rm HEADER.txt
+
+Changelog: _darcs/inventory
+	darcs changes > Changelog
+
 man:
 	doxygen Doxyfile
 

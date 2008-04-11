@@ -1,21 +1,72 @@
-Hi,
+= Simple statistics generator for darcs
+Miklos Vajna <vmiklos@vmiklos.hu>
 
-If you want to try out this stuff, then just type the usual
+== What's darcsstats?
 
-	make && make install
+darcsstats is a simple statistics generator for
+link:http://darcs.net/[darcs] repositories.
 
-then
+== Why is it good?
 
-	man darcsstats
+It may or may not be good for you. I wrote it as a homework with the
+following conditions:
 
-to read the documentation.
+- should be written in C
+
+- using external libraries are not allowed
+
+It works fine, but probably just a tool could be just written in a
+script language, or at least it could use GList instead of the current
+internal linked list implementation.
+
+Also, as I no longer use darcs these days, it's kind of unmaintained but
+as far as I know it still works properly with the latest stable version
+of darcs.
+
+== Download
+
+----
+darcs get http://vmiklos.hu/project/darcsstats
+----
+
+should be able to download the code.
+
+== How does it work?
+
+If you want to try out this stuff, then to build the code, just type the usual
+
+----
+$ make
+----
+
+to install it:
+
+----
+# make install
+----
+
+to read the documentation:
+
+----
+$ man darcsstats
+----
+
+== Samples
+
+Sample for link:samples/chicken.html[chicken] and
+link:samples/lambdabot.html[lambdabot] are available.
+
+== Further resources
 
 If you want to read the development docs, then type
 
-	make html
+----
+$ make html
+----
 
 and open the html files from the html/ dir in your favorite web
-browser.
+browser, or just read them link:html/[here].
 
-Have fun,
-VMiklos
+Back to my link:/projects[projects page].
+
+// vim: ft=asciidoc
