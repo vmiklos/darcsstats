@@ -14,7 +14,7 @@ I wrote it as a homework with the following conditions:
 
 - using external libraries are not allowed
 
-It works fine, but probably just a tool could be just written in a
+It works fine, but probably such a tool could be just written in a
 script language, or at least it could use GList instead of the current
 internal linked list implementation.
 
