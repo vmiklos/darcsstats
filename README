@@ -25,7 +25,7 @@ of darcs.
 == Download
 
 ----
-darcs get http://vmiklos.hu/project/darcsstats
+git clone https://github.com/vmiklos/darcsstats.git
 ----
 
 should be able to download the code.
@@ -66,6 +66,6 @@ $ make html
 and open the html files from the html/ dir in your favorite web
 browser, or just read them link:html/[here].
 
-Back to my link:/projects[projects page].
+Back to my https://github.com/vmiklos[projects page].
 
 // vim: ft=asciidoc
